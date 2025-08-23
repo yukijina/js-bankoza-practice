@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style.css" />
     <title>Bankozan</title>
   </head>
+
   <body>
     <!-- Navigation -->
     <nav>
@@ -53,17 +54,60 @@
           </div>
           <div class="movements__date">0 days ago</div>
           <div class="movements_value">0000 €</div>
+        </div>
       </div>
 
       <!-- Summary -->
       <div class="summary">
-       <p class="summary__label">IN</p>
-       <p class="summary__value summary__value--in">0000 €</p>
-       <p class="summary__label">OUT</p>
-       <p class="summary__value summary__value--out">0000 €</p>
-       <p class="summary__label">IN</p>
-       <p class="summary__value summary__value--interest">0000 €</p>
+        <p class="summary__label">IN</p>
+        <p class="summary__value summary__value--in">0000 €</p>
+        <p class="summary__label">OUT</p>
+        <p class="summary__value summary__value--out">0000 €</p>
+        <p class="summary__label">IN</p>
+        <p class="summary__value summary__value--interest">0000 €</p>
       </div>
+
+      <!-- Operation: Transfer -->
+      <div class="operation operation--transfer">
+        <h2>Transfer money</h2>
+        <form class="form form--transfer">
+          <input type="text" class="form__input form__input--to" />
+          <input type="number" class="form__input form__input--amount" />
+          <button class="form__btn form__btn--translfer">&rarr;</button>
+          <label class="form__label">Transfter to</label>
+          <label for="" class="form__label">Amount</label>
+        </form>
+      </div>
+
+      <!-- Operation: Request Loan -->
+      <div class="operation operation--loan">
+        <h2>request Loan</h2>
+        <form class="form form--loan">
+          <input type="number" class="form__input form__input--loan-amount" />
+          <button class="form__btn form__btn--loan">&rarr;</button>
+        </form>
+      </div>
+
+      <!-- Operation: Close account -->
+      <div class="operation operation--close">
+        <h2>Close account</h2>
+        <form class="form form--close">
+          <input type="text" class="form__input form__input--user" />
+          <input
+            type="password"
+            max-number="6"
+            class="form__input form__input--pin"
+          />
+          <button class="form__btn form__btn--close">&rarr;</button>
+          <label class="form__label">Confirm user</label>
+          <label class="form__label">Confirm PIN</label>
+        </form>
+      </div>
+
+      <!-- Logout timer -->
+      <p class="logout-timer">
+        You will be logged out in <span class="timer">5:00</span>
+      </p>
     </main>
   </body>
 </html>
