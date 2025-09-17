@@ -122,15 +122,15 @@ accounts.forEach((account, i) => {
     .join('');
 });
 
-// let currentUser;
-let currentUser = account1;
+// let currentAccount;
+let currentAccount = account1;
 
 ///////////////////////////////////////////////////////////////
 // User login
 formLogin.addEventListener('submit', function (e) {
   e.preventDefault();
   //check if username and pw exist in the accounts
-  currentUser = accounts.filter(
+  currentAccount = accounts.filter(
     (account) =>
       account.username === e.target[0].value &&
       account.pin === Number(e.target[1].value)
@@ -139,7 +139,7 @@ formLogin.addEventListener('submit', function (e) {
   // if so, render account information for the user
 });
 
-console.log(currentUser);
+console.log(currentAccount);
 ///////////////////////////////////////////////////////////////
 // Render account information after login
 
