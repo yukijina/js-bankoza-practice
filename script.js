@@ -96,14 +96,15 @@ const labelTimer = document.querySelector('.timer');
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
 
-const btnLogin = document.querySelector('.login__btn');
+const formLogin = document.querySelector('.login');
+// const btnLogin = document.querySelector('.login__btn');
 const btnTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
 const btnSort = document.querySelector('.btn--sort');
 
-const inputLoginUsername = document.querySelector('.login__input--user');
-const inputLoginPin = document.querySelector('.login__input--pin');
+// const inputLoginUsername = document.querySelector('.login__input--user');
+// const inputLoginPin = document.querySelector('.login__input--pin');
 const inputTransferTo = document.querySelector('.form__input--to');
 const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
@@ -112,6 +113,35 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 ///////////////////////////////////////////////////////////////
 // Functions
+
+// Create user name and add user to objects
+accounts.forEach((account, i) => {
+  account.username = account.owner
+    .split(' ')
+    .map((owner) => owner[0].toLowerCase())
+    .join('');
+});
+
+// let currentUser;
+let currentUser = account1;
+
+///////////////////////////////////////////////////////////////
+// User login
+formLogin.addEventListener('submit', function (e) {
+  e.preventDefault();
+  //check if username and pw exist in the accounts
+  currentUser = accounts.filter(
+    (account) =>
+      account.username === e.target[0].value &&
+      account.pin === Number(e.target[1].value)
+  )[0];
+
+  // if so, render account information for the user
+});
+
+console.log(currentUser);
+///////////////////////////////////////////////////////////////
+// Render account information after login
 
 ///////////////////////////////////////////////////////////////
 //
