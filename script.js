@@ -139,9 +139,38 @@ formLogin.addEventListener('submit', function (e) {
   // if so, render account information for the user
 });
 
-console.log(currentAccount);
+// console.log(currentAccount);
 ///////////////////////////////////////////////////////////////
 // Render account information after login
+const displayMovements = function (acc) {
+  containerMovements.innerHTML = '';
 
+  acc.movements.forEach((movement, i) => {
+    //raw HTML
+    const dirty = `<div class="movements__row">
+    <div class="movements__type movements__type--${
+      movement > 0 ? 'deposit' : 'withdrawal'
+    }">${i + 1} ${movement > 0 ? 'deposit' : 'withdrawal'}</div>
+    <div class="movements__date">0 days ago</div>
+    <div class="movements__value">${Math.abs(movement)} €</div>
+    </div>
+    `;
+
+    // Cerate a trusted policy via Trusted API.
+    //Check trustedTypes exist using ? so it does not throw error
+    const policy = window.trustedTypes?.createPolicy('safe-html', {
+      createHTML: (input) => DOMPurify.sanitize(input),
+    });
+
+    // if browsers do not support trustedAPI like Firefox, safari, mobile (as of 2025),
+    // it sanitize thrpugh DOMPurify, it use just DOMPurify
+    const safeHTML = policy
+      ? policy.createHTML(dirty)
+      : DOMPurify.sanitize(dirty);
+    containerMovements.insertAdjacentHTML('afterbegin', safeHTML);
+  });
+};
 ///////////////////////////////////////////////////////////////
 //
+
+displayMovements(currentAccount);
