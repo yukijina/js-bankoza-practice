@@ -46,7 +46,6 @@ const account3 = {
   movements: [430, 1000, 700, 50, 90, -200, -150, 1200],
   interestRate: 0.7,
   pin: 3333,
-
   movementsDate: [
     '2024-01-01T08:23:44.123Z',
     '2024-01-15T09:20:10.456Z',
@@ -114,12 +113,14 @@ const inputClosePin = document.querySelector('.form__input--pin');
 ///////////////////////////////////////////////////////////////
 // Functions
 
-// Create user name and add user to objects
+// Create user name and ID. add them to each account object
 accounts.forEach((account, i) => {
   account.username = account.owner
     .split(' ')
     .map((owner) => owner[0].toLowerCase())
     .join('');
+
+  account.id = Math.round(Math.random() * 1000000);
 });
 
 // let currentAccount;
