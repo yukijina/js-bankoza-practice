@@ -141,12 +141,21 @@ formLogin.addEventListener('submit', function (e) {
 });
 
 // console.log(currentAccount);
+
+///////////////////////////////////////////////////////////////
+// Display in, out and interest
+const displaySummary = function (acc) {};
+
 ///////////////////////////////////////////////////////////////
 // Render account information after login
-const displayMovements = function (acc) {
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  acc.movements.forEach((movement, i) => {
+  let movements;
+  movements = sort ? acc.movements.toSorted((a, b) => b - a) : acc.movements;
+  // console.log(movements);
+
+  movements.forEach((movement, i) => {
     //raw HTML
     const dirty = `<div class="movements__row">
     <div class="movements__type movements__type--${
@@ -171,7 +180,18 @@ const displayMovements = function (acc) {
     containerMovements.insertAdjacentHTML('afterbegin', safeHTML);
   });
 };
+
+///////////////////////////////////////////////////////////////
+// Sort movements
+let sorted = true;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount, sorted);
+
+  // swith sorted = true/false after function was called
+  sorted = !sorted;
+});
+
 ///////////////////////////////////////////////////////////////
 //
-
 displayMovements(currentAccount);
