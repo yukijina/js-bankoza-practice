@@ -3,7 +3,7 @@
 // Accounts
 const account1 = {
   owner: 'John Smith',
-  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
+  movements: [200, 455, -306, 2500, -642, -133, 79, 1300],
   interestRate: 1.2, // %
   pin: 1111,
 
@@ -144,15 +144,35 @@ formLogin.addEventListener('submit', function (e) {
 
 ///////////////////////////////////////////////////////////////
 // Display in, out and interest
-const displaySummary = function (acc) {};
+const displaySummary = function (account) {
+  const sumIn = account.movements
+    .filter((movement) => movement > 0)
+    .reduce((acc, movement) => (acc = acc + movement), 0);
+
+  const sumOut = account.movements
+    .filter((movement) => movement < 0)
+    .reduce((acc, movement) => acc + movement, 0);
+
+  const sumInterest = ((sumIn * account.interestRate) / 100).toFixed(2);
+
+  const currency = account.currency;
+
+  labelSumIn.textContent = `${sumIn} ${currency}`;
+  labelSumOut.textContent = `${Math.abs(sumOut)} ${currency}`;
+  labelSumInterest.textContent = `${sumInterest} ${currency}`;
+};
+
+displaySummary(currentAccount);
 
 ///////////////////////////////////////////////////////////////
 // Render account information after login
-const displayMovements = function (acc, sort = false) {
+const displayMovements = function (account, sort = false) {
   containerMovements.innerHTML = '';
 
   let movements;
-  movements = sort ? acc.movements.toSorted((a, b) => b - a) : acc.movements;
+  movements = sort
+    ? account.movements.toSorted((a, b) => b - a)
+    : account.movements;
   // console.log(movements);
 
   movements.forEach((movement, i) => {
