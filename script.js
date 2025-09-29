@@ -143,6 +143,16 @@ formLogin.addEventListener('submit', function (e) {
 // console.log(currentAccount);
 
 ///////////////////////////////////////////////////////////////
+// Display current account total
+const displayBalance = function (account) {
+  const balance = account.movements.reduce(
+    (acc, movement) => acc + movement,
+    0
+  );
+  labelBalance.textContent = `${balance} ${account.currency}`;
+};
+
+///////////////////////////////////////////////////////////////
 // Display in, out and interest
 const displaySummary = function (account) {
   const sumIn = account.movements
@@ -161,8 +171,6 @@ const displaySummary = function (account) {
   labelSumOut.textContent = `${Math.abs(sumOut)} ${currency}`;
   labelSumInterest.textContent = `${sumInterest} ${currency}`;
 };
-
-displaySummary(currentAccount);
 
 ///////////////////////////////////////////////////////////////
 // Render account information after login
@@ -213,5 +221,14 @@ btnSort.addEventListener('click', function (e) {
 });
 
 ///////////////////////////////////////////////////////////////
+// Initialize
+const init = function () {
+  displayBalance(currentAccount);
+  displaySummary(currentAccount);
+  displayMovements(currentAccount);
+};
+
+init();
+
+///////////////////////////////////////////////////////////////
 //
-displayMovements(currentAccount);
