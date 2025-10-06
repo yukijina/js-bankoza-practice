@@ -143,16 +143,33 @@ formLogin.addEventListener('submit', function (e) {
 // console.log(currentAccount);
 
 ///////////////////////////////////////////////////////////////
-// display date
+// display date based on the current date
+// const displayDate = function (account) {
+//   const now = new Date();
+//   const month = String(now.getMonth() + 1).padStart(2, 0);
+//   const date = String(now.getDate()).padStart(2, 0);
+//   const year = now.getFullYear();
 
+//   console.log(navigator.geolocation);
+//   labelDate.textContent = `${month}/${date}/${year}`;
+// };
+
+// displayDate(currentAccount);
+
+///////////////////////////////////////////////////////////////
+// display date based on international date/time and user's location
 const displayDate = function (account) {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, 0);
-  const date = String(now.getDate()).padStart(2, 0);
-  const year = now.getFullYear();
-
-  console.log(navigator.geolocation);
-  labelDate.textContent = `${month}/${date}/${year}`;
+  const option = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    weekday: 'short',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
+  // const date = new Intl.DateTimeFormat(account.local, option).format();
+  const date = new Intl.DateTimeFormat(navigator.language, option).format();
+  labelDate.textContent = date.replaceAll(',', '');
 };
 
 displayDate(currentAccount);
