@@ -143,7 +143,22 @@ formLogin.addEventListener('submit', function (e) {
 // console.log(currentAccount);
 
 ///////////////////////////////////////////////////////////////
-// Display current account total
+// display date
+
+const displayDate = function (account) {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, 0);
+  const date = String(now.getDate()).padStart(2, 0);
+  const year = now.getFullYear();
+
+  console.log(navigator.geolocation);
+  labelDate.textContent = `${month}/${date}/${year}`;
+};
+
+displayDate(currentAccount);
+
+///////////////////////////////////////////////////////////////
+// display current account total
 const displayBalance = function (account) {
   const balance = account.movements.reduce(
     (acc, movement) => acc + movement,
