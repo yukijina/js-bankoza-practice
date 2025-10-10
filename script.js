@@ -110,9 +110,47 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// let currentAccount;
+let currentAccount = account1;
+
 ///////////////////////////////////////////////////////////////
 // Functions
 
+///////////////////////////////////////////////////////////////
+// Transfer money
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const currentDate = new Date().toISOString();
+  const transferAmount = Number(inputTransferAmount.value);
+  const transferTo = inputTransferTo.value;
+
+  // when user inputs are missing
+  if (transferAmount === 0 || transferTo === '')
+    alert(`Invalid Input. Please try again`);
+
+  // find account to transfer
+  const transfterToAccount = accounts.find(
+    (account) => account.username === transferTo
+  );
+
+  // if account does not exist, alert and exit
+  if (!transfterToAccount) alert(`This account does not exit`);
+
+  // if user does not have enough balance, alert and exit
+  if (accountBalance(currentAccount) <= transferAmount)
+    alert(`You don't have enough balance for this transaction`);
+
+  // if account and balance meet the criterial, complete the transaction
+  if (transfterToAccount && accountBalance(currentAccount) >= transferAmount) {
+    transfterToAccount.movements.push(transferAmount);
+    transfterToAccount.movementsDate.push(currentDate);
+
+    currentAccount.movements.push(-transferAmount);
+    currentAccount.movementsDate.push(currentDate);
+    alert('Transaction is complete!✅');
+  }
+});
+///////////////////////////////////////////////////////////////
 // Create user name and ID. add them to each account object
 accounts.forEach((account, i) => {
   account.username = account.owner
@@ -122,9 +160,6 @@ accounts.forEach((account, i) => {
 
   account.id = Math.round(Math.random() * 1000000);
 });
-
-// let currentAccount;
-let currentAccount = account1;
 
 ///////////////////////////////////////////////////////////////
 // User login
@@ -176,11 +211,12 @@ displayDate(currentAccount);
 
 ///////////////////////////////////////////////////////////////
 // display current account total
+
+const accountBalance = (account) =>
+  account.movements.reduce((acc, movement) => acc + movement, 0);
+
 const displayBalance = function (account) {
-  const balance = account.movements.reduce(
-    (acc, movement) => acc + movement,
-    0
-  );
+  const balance = accountBalance(account);
   labelBalance.textContent = `${balance} ${account.currency}`;
 };
 
