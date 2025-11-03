@@ -112,6 +112,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // let currentAccount;
 let currentAccount = account1;
+const currentDate = new Date().toISOString();
 
 ///////////////////////////////////////////////////////////////
 // Functions
@@ -120,7 +121,6 @@ let currentAccount = account1;
 // Transfer money
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const currentDate = new Date().toISOString();
   const transferAmount = Number(inputTransferAmount.value);
   const transferTo = inputTransferTo.value;
 
@@ -150,6 +150,24 @@ btnTransfer.addEventListener('click', function (e) {
     alert('Transaction is complete!✅');
     init();
   }
+});
+
+///////////////////////////////////////////////////////////////
+// Request loan
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const loanAmount = inputLoanAmount.value * currentAccount.interestRate;
+
+  // requester's balance needs to be loan amount + 100
+  if (loanAmount + 100 > accountBalance(currentAccount)) {
+    alert(`You don't have enough balance to request this loan 😞`);
+  }
+
+  currentAccount.movements.push(-loanAmount);
+  currentAccount.movementsDate.push(currentDate);
+  alert('Loan Request is complete!✅');
+  init();
 });
 
 ///////////////////////////////////////////////////////////////
