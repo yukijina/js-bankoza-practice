@@ -148,8 +148,10 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-transferAmount);
     currentAccount.movementsDate.push(currentDate);
     alert('Transaction is complete!✅');
+    init();
   }
 });
+
 ///////////////////////////////////////////////////////////////
 // Create user name and ID. add them to each account object
 accounts.forEach((account, i) => {
