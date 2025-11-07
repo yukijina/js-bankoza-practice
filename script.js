@@ -12,10 +12,10 @@ const account1 = {
     '2023-12-23T07:42:02.383Z',
     '2024-01-28T09:15:04.904Z',
     '2024-04-01T10:17:24.185Z',
-    '2024-05-08T14:11:59.604Z',
-    '2025-08-30T14:43:26.374Z',
-    '2025-08-31T18:49:59.371Z',
-    '2025-09-01T12:01:20.894Z',
+    '2025-10-30T14:11:59.604Z',
+    '2025-11-03T14:43:26.374Z',
+    '2025-11-05T18:49:59.371Z',
+    '2025-11-06T12:01:20.894Z',
   ],
   currency: 'EUR',
   local: 'pt-PT',
@@ -116,6 +116,26 @@ const currentDate = new Date().toISOString();
 
 ///////////////////////////////////////////////////////////////
 // Functions
+
+///////////////////////////////////////////////////////////////
+// Fromat movement date
+const formateMovementDate = function (date, locale) {
+  const calcDaysPassed = (date1, date2) => {
+    // Math abs - when the date1 is older than date2
+    // 1000 milliseconds per sec, 60 sec per min, 60 min per hour, 24 hr per day
+    return Math.ceil(Math.abs((date1 - date2) / (1000 * 60 * 60 * 24)));
+  };
+
+  // param: current date, movement date
+  const daysPassed = calcDaysPassed(new Date(), date);
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  // if daysPassed is more than 7 days ago, it reutns a formatted date
+  return new Intl.DateTimeFormat(locale).format(date);
+};
 
 ///////////////////////////////////////////////////////////////
 // Transfer money
@@ -231,7 +251,6 @@ displayDate(currentAccount);
 
 ///////////////////////////////////////////////////////////////
 // display current account total
-
 const accountBalance = (account) =>
   account.movements.reduce((acc, movement) => acc + movement, 0);
 
@@ -272,14 +291,19 @@ const displayMovements = function (account, sort = false) {
   // console.log(movements);
 
   movements.forEach((movement, i) => {
+    console.log(account.movementsDate[i]);
     //raw HTML
-    const dirty = `<div class="movements__row">
-    <div class="movements__type movements__type--${
-      movement > 0 ? 'deposit' : 'withdrawal'
-    }">${i + 1} ${movement > 0 ? 'deposit' : 'withdrawal'}</div>
-    <div class="movements__date">0 days ago</div>
-    <div class="movements__value">${Math.abs(movement)} €</div>
-    </div>
+    const dirty = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--${
+          movement > 0 ? 'deposit' : 'withdrawal'
+        }">${i + 1} ${movement > 0 ? 'deposit' : 'withdrawal'}</div>
+        <div class="movements__date">${formateMovementDate(
+          new Date(account.movementsDate[i]),
+          account.local
+        )}</div>
+        <div class="movements__value">${Math.abs(movement)} €</div>
+      </div>
     `;
 
     // Cerate a trusted policy via Trusted API.
