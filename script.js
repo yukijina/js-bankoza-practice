@@ -215,6 +215,28 @@ formLogin.addEventListener('submit', function (e) {
   // if so, render account information for the user
 });
 
+///////////////////////////////////////////////////////////////
+// Log out timer
+const startLogOutTimer = function (timeLimit = 120) {
+  // timeLimit default 120 sec = 2 min
+
+  const timer = setInterval(function () {
+    const min = String(Math.trunc(timeLimit / 60)).padStart(2, 0);
+    const sec = String(Math.trunc(timeLimit % 60)).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // If there is not time left, it will be logged out
+    if (timeLimit === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    timeLimit--;
+  }, 1000);
+};
+
+// startLogOutTimer();
 // console.log(currentAccount);
 
 ///////////////////////////////////////////////////////////////
@@ -291,7 +313,6 @@ const displayMovements = function (account, sort = false) {
   // console.log(movements);
 
   movements.forEach((movement, i) => {
-    console.log(account.movementsDate[i]);
     //raw HTML
     const dirty = `
       <div class="movements__row">
