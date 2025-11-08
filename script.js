@@ -22,7 +22,7 @@ const account1 = {
 };
 
 const account2 = {
-  owner: 'Emily Brown',
+  owner: 'Jessica Davis',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
@@ -170,6 +170,10 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-transferAmount);
     currentAccount.movementsDate.push(currentDate);
     alert('Transaction is complete!✅');
+
+    // Reset timer. timer is global variable
+    clearInterval(timer);
+    timer = startLogOutTimer(300);
     init();
   }
 });
@@ -189,6 +193,12 @@ btnLoan.addEventListener('click', function (e) {
   currentAccount.movements.push(-loanAmount);
   currentAccount.movementsDate.push(currentDate);
   alert('Loan Request is complete!✅');
+
+  // Reset timer. timer is global variable
+  clearInterval(timer);
+  timer = startLogOutTimer(300);
+
+  // Rerender with new loan amount
   init();
 });
 
@@ -230,7 +240,7 @@ formLogin.addEventListener('submit', function (e) {
 
 ///////////////////////////////////////////////////////////////
 // Log out timer
-const startLogOutTimer = function (timeLimit = 120) {
+const startLogOutTimer = function (timeLimit = 600) {
   // timeLimit default 120 sec = 2 min
 
   const tick = function () {
