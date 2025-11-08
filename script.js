@@ -102,16 +102,18 @@ const btnLoan = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
 const btnSort = document.querySelector('.btn--sort');
 
-// const inputLoginUsername = document.querySelector('.login__input--user');
-// const inputLoginPin = document.querySelector('.login__input--pin');
+const inputLoginUsername = document.querySelector('.login__input--user');
+const inputLoginPin = document.querySelector('.login__input--pin');
 const inputTransferTo = document.querySelector('.form__input--to');
 const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-// let currentAccount;
-let currentAccount = account1;
+// Global varialble
+// timer - timer should persist degardless different login
+let currentAccount, timer;
+// let currentAccount = account1;
 const currentDate = new Date().toISOString();
 
 ///////////////////////////////////////////////////////////////
@@ -212,7 +214,18 @@ formLogin.addEventListener('submit', function (e) {
       account.pin === Number(e.target[1].value)
   )[0];
 
-  // if so, render account information for the user
+  // Clear input value
+  inputLoginUsername.value = '';
+  inputLoginPin.value = '';
+
+  containerApp.style.opacity = 1;
+
+  // If timer alrady exist, clear it first
+  if (timer) clearInterval(timer);
+  timer = startLogOutTimer();
+
+  // render account information for the user
+  init();
 });
 
 ///////////////////////////////////////////////////////////////
@@ -220,23 +233,31 @@ formLogin.addEventListener('submit', function (e) {
 const startLogOutTimer = function (timeLimit = 120) {
   // timeLimit default 120 sec = 2 min
 
-  const timer = setInterval(function () {
+  const tick = function () {
     const min = String(Math.trunc(timeLimit / 60)).padStart(2, 0);
     const sec = String(Math.trunc(timeLimit % 60)).padStart(2, 0);
 
     labelTimer.textContent = `${min}:${sec}`;
 
-    // If there is not time left, it will be logged out
+    // If there is not time left, it will be logged out. This also prevent the timer goes to minus
     if (timeLimit === 0) {
       clearInterval(timer);
       labelWelcome.textContent = 'Log in to get started';
       containerApp.style.opacity = 0;
     }
     timeLimit--;
-  }, 1000);
+  };
+
+  // This allowed to call tick Immediately before waiting for 1000 milliseconds
+  tick();
+
+  // created a separate function -tick. This allowes us to call tick when a page is loaded
+  const timer = setInterval(tick, 1000);
+
+  /// to clear the timer, we need to return timer
+  return timer;
 };
 
-// startLogOutTimer();
 // console.log(currentAccount);
 
 ///////////////////////////////////////////////////////////////
@@ -361,7 +382,7 @@ const init = function () {
   displayMovements(currentAccount);
 };
 
-init();
+// init();
 
 ///////////////////////////////////////////////////////////////
 //
