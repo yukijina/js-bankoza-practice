@@ -295,22 +295,6 @@ const startLogOutTimer = function (timeLimit = 600) {
   return timer;
 };
 
-// console.log(currentAccount);
-
-///////////////////////////////////////////////////////////////
-// display date based on the current date
-// const displayDate = function (account) {
-//   const now = new Date();
-//   const month = String(now.getMonth() + 1).padStart(2, 0);
-//   const date = String(now.getDate()).padStart(2, 0);
-//   const year = now.getFullYear();
-
-//   console.log(navigator.geolocation);
-//   labelDate.textContent = `${month}/${date}/${year}`;
-// };
-
-// displayDate(currentAccount);
-
 ///////////////////////////////////////////////////////////////
 // display date based on international date/time and user's location
 const displayDate = function (account) {
@@ -362,7 +346,6 @@ const displaySummary = function (account) {
 ///////////////////////////////////////////////////////////////
 // currency symbol
 const convertCurrencyToSymbnol = (currency) => {
-  console.log(currency);
   if (currency === 'USD' || currency === 'CAD') return '$';
   if (currency === 'EUR') return '€';
   if (currency === 'GBP') return '£';
@@ -377,7 +360,6 @@ const displayMovements = function (account, sort = false) {
   movements = sort
     ? account.movements.toSorted((a, b) => b - a)
     : account.movements;
-  // console.log(movements);
 
   movements.forEach((movement, i) => {
     //raw HTML
@@ -425,13 +407,7 @@ btnSort.addEventListener('click', function (e) {
 ///////////////////////////////////////////////////////////////
 // Initialize
 const init = function () {
-  console.log(currentAccount);
   displayBalance(currentAccount);
   displaySummary(currentAccount);
   displayMovements(currentAccount);
 };
-
-// init();
-
-///////////////////////////////////////////////////////////////
-//
