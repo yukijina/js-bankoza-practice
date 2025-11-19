@@ -352,11 +352,20 @@ const displaySummary = function (account) {
 
   const sumInterest = ((sumIn * account.interestRate) / 100).toFixed(2);
 
-  const currency = account.currency;
+  const currency = convertCurrencyToSymbnol(account.currency);
 
   labelSumIn.textContent = `${sumIn} ${currency}`;
   labelSumOut.textContent = `${Math.abs(sumOut)} ${currency}`;
   labelSumInterest.textContent = `${sumInterest} ${currency}`;
+};
+
+///////////////////////////////////////////////////////////////
+// currency symbol
+const convertCurrencyToSymbnol = (currency) => {
+  console.log(currency);
+  if (currency === 'USD' || currency === 'CAD') return '$';
+  if (currency === 'EUR') return '€';
+  if (currency === 'GBP') return '£';
 };
 
 ///////////////////////////////////////////////////////////////
@@ -381,7 +390,9 @@ const displayMovements = function (account, sort = false) {
           new Date(account.movementsDate[i]),
           account.local
         )}</div>
-        <div class="movements__value">${Math.abs(movement)} €</div>
+        <div class="movements__value">${Math.abs(
+          movement
+        )} ${convertCurrencyToSymbnol(account.currency)}</div>
       </div>
     `;
 
