@@ -252,6 +252,21 @@ formLogin.addEventListener('submit', function (e) {
 });
 
 ///////////////////////////////////////////////////////////////
+// User logout
+const resetLogin = function () {
+  labelWelcome.textContent = 'Log in to get started';
+  formLogin.classList.remove('login--hidden');
+  btnLogout.classList.add('login--hidden');
+  nav.classList.remove('login--fail', 'login--success');
+  containerApp.style.opacity = 0;
+};
+
+btnLogout.addEventListener('click', function (e) {
+  e.preventDefault();
+  resetLogin();
+});
+
+///////////////////////////////////////////////////////////////
 // Log out timer
 const startLogOutTimer = function (timeLimit = 600) {
   // timeLimit default 120 sec = 2 min
@@ -265,8 +280,7 @@ const startLogOutTimer = function (timeLimit = 600) {
     // If there is not time left, it will be logged out. This also prevent the timer goes to minus
     if (timeLimit === 0) {
       clearInterval(timer);
-      labelWelcome.textContent = 'Log in to get started';
-      containerApp.style.opacity = 0;
+      resetLogin();
     }
     timeLimit--;
   };
