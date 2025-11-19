@@ -39,6 +39,29 @@ nav {
   display: flex;
 }
 
+.login--fail {
+  background-color: #fbe1e8;
+}
+
+.login--success {
+  background-color: #e3fce3;
+}
+
+.login--hidden {
+  display: none;
+}
+
+.logout__btn {
+  padding: 0.5rem 2rem;
+  border: 1px solid #61a1d8;
+  color: #61a1d8;
+  background-color: #fff;
+  border-radius: 10rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
 .login__input {
   padding: 0.5rem 2rem;
   border-radius: 10rem;
@@ -72,7 +95,8 @@ nav {
 .login__btn:hover,
 .login__btn:focus,
 .btn--sort:hover,
-.btn--sort:focus {
+.btn--sort:focus,
+.logout__btn:hover {
   color: #777;
 }
 

@@ -84,6 +84,7 @@ const accounts = [account1, account2, account3, account4];
 
 ///////////////////////////////////////////////////////////////
 // Elements
+const nav = document.querySelector('.navigation');
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
@@ -96,7 +97,8 @@ const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
 
 const formLogin = document.querySelector('.login');
-// const btnLogin = document.querySelector('.login__btn');
+//const btnLogin = document.querySelector('.login__btn');
+const btnLogout = document.querySelector('.logout__btn');
 const btnTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
@@ -228,6 +230,17 @@ formLogin.addEventListener('submit', function (e) {
   inputLoginUsername.value = '';
   inputLoginPin.value = '';
 
+  if (!currentAccount) {
+    labelWelcome.textContent = 'Wrong username or password. Please try again';
+    nav.classList.add('login--fail');
+    return;
+  }
+
+  labelWelcome.textContent = `Welcome back, ${currentAccount.owner}!`;
+  nav.classList.remove('login--fail');
+  nav.classList.add('login--success');
+  formLogin.classList.add('login--hidden');
+  btnLogout.classList.remove('login--hidden');
   containerApp.style.opacity = 1;
 
   // If timer alrady exist, clear it first
@@ -387,6 +400,7 @@ btnSort.addEventListener('click', function (e) {
 ///////////////////////////////////////////////////////////////
 // Initialize
 const init = function () {
+  console.log(currentAccount);
   displayBalance(currentAccount);
   displaySummary(currentAccount);
   displayMovements(currentAccount);
